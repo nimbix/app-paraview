@@ -14,10 +14,10 @@
 # Author: Stephen Fox (stephen.fox@nimbix.net)
 
 image: Dockerfile
-	docker build -t paraview .
+	docker build -t app-paraview .
 
 tag: image
-	docker tag paraview jarvice/paraview:latest && docker tag paraview jarvice/paraview:5
+	docker tag paraview jarvice/app-paraview:latest && docker tag paraview jarvice/app-paraview:5
 
 all : tag
-	docker push jarvice/paraview:latest && docker push jarvice/paraview:5
+	docker push jarvice/app-paraview:latest && docker push jarvice/app-paraview:5
