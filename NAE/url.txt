@@ -1,0 +1,1 @@
+https://%PUBLICADDR%/vnc.html?host=%PUBLICADDR%&username=nimbix&password=%NIMBIXPASSWD%
