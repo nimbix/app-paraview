@@ -12,6 +12,10 @@ RUN mv /usr/local/src/ParaView-5.1.2-Qt4-OpenGL2-MPI-Linux-64bit /usr/local/Para
 RUN rm "/usr/local/src/download.php?submit=Download&version=v5.1&type=binary&os=linux64&downloadFile=ParaView-5.1.2-Qt4-OpenGL2-MPI-Linux-64bit.tar.gz"
 
 ADD ./scripts /usr/local/scripts
+
+# Add PushToCompute Work Flow Metadata
 ADD ./NAE/nvidia.cfg /etc/NAE/nvidia.cfg
+ADD ./NAE/AppDef.png /etc/NAE/AppDef.png
+ADD ./NAE/AppDef.json /etc/NAE/AppDef.json
 
 CMD /usr/local/scripts/start.sh
