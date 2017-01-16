@@ -10,8 +10,7 @@
       "High Performance Data Analysis"
   ],
   "machines": [
-    "ng2",
-    "ng3"
+    "ng2"
   ],
   "scale_max": 1,
   "vault-types": [
