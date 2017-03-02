@@ -5,9 +5,8 @@
   "author": "Kitware",
   "licensed": true,
   "classifications": [
-      "Computer Aided Engineering",
-      "Visualization",
-      "High Performance Data Analysis"
+      "Simulation/Visualization",
+      "Simulation/Postprocessing"
   ],
   "machines": [
     "ng2"
