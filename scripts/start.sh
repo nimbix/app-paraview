@@ -1,5 +1,5 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-cd /data
+cd /data || true
 
-exec /usr/local/bin/nimbix_desktop /usr/local/ParaView-5.1.2/bin/paraview
+exec /usr/local/bin/nimbix_desktop /usr/bin/paraview
