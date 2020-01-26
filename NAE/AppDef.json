@@ -1,6 +1,6 @@
 {
-  "name": "ParaView 5.4",
-  "description": "Run ParaView 5.4 for data analysis and visualization",
+  "name": "ParaView 5.7",
+  "description": "Run ParaView 5.7 for data analysis and visualization",
   "author": "Kitware, Inc.",
   "licensed": true,
   "classifications": [

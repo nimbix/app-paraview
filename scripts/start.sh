@@ -2,4 +2,4 @@
 
 cd /data || true
 
-exec /usr/local/bin/nimbix_desktop /usr/bin/paraview
+exec /usr/local/bin/nimbix_desktop /usr/local/paraview/bin/paraview
