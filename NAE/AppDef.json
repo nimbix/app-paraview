@@ -1,6 +1,6 @@
 {
-  "name": "ParaView",
-  "description": "Run ParaView for data analysis and visualization directly in your browser",
+  "name": "ParaView 5.4",
+  "description": "Run ParaView 5.4 for data analysis and visualization",
   "author": "Kitware, Inc.",
   "licensed": true,
   "classifications": [
@@ -20,7 +20,7 @@
       "path": "/usr/local/scripts/start.sh",
       "interactive": true,
       "name": "ParaView",
-      "description": "Run a ParaView directly in your browser"
+      "description": "Run the Paraview UI"
     }
   },
   "image": {
