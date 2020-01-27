@@ -16,7 +16,7 @@ RUN apt-get -y update && \
 # Install Paraview
 WORKDIR /usr/local/paraview
 RUN curl "https://www.paraview.org/paraview-downloads/download.php?submit=Download&version=v5.7&type=binary&os=Linux&downloadFile=ParaView-5.7.0-MPI-Linux-Python2.7-64bit.tar.gz" | \
-    tar xz
+    tar xz --strip-components=1
 
 COPY scripts /usr/local/scripts
 
