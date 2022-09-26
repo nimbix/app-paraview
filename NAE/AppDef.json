@@ -1,6 +1,6 @@
 {
-  "name": "ParaView 5.8.1",
-  "description": "Run ParaView 5.8.1 for data analysis and visualization",
+  "name": "ParaView 5.10.1",
+  "description": "Run ParaView 5.10.1 for data analysis and visualization",
   "author": "Kitware, Inc.",
   "licensed": true,
   "classifications": [
@@ -8,8 +8,7 @@
     "Simulation/Postprocessing"
   ],
   "machines": [
-    "nc[3-9]*",
-    "nc[1-9][0-9]*"
+    "n*"
   ],
   "scale_max": 1,
   "vault-types": [
