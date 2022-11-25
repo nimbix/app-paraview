@@ -1,8 +1,9 @@
 {
-  "name": "ParaView 5.10.2",
-  "description": "Run ParaView 5.10.2 for data analysis and visualization",
+  "name": "ParaView 5.11.0",
+  "description": "Run ParaView 5.11.0 for data analysis and visualization",
   "author": "Kitware, Inc.",
   "licensed": true,
+  "appdefversion": 2,
   "classifications": [
     "Simulation/Visualization",
     "Simulation/Postprocessing"
@@ -18,6 +19,7 @@
     "gui": {
       "path": "/usr/local/scripts/start.sh",
       "interactive": true,
+      "desktop": true,
       "name": "ParaView",
       "description": "Run the Paraview UI"
     }
