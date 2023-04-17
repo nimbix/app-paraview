@@ -1,4 +1,4 @@
-# Copyright (c) 2022, Nimbix, Inc.
+# Copyright (c) 2023, Nimbix, Inc.
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -31,7 +31,7 @@ LABEL maintainer="Nimbix, Inc." \
 
 # Update SERIAL_NUMBER to force rebuild of all layers (don't use cached layers)
 ARG SERIAL_NUMBER
-ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20221028.1000}
+ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20230227.1000}
 
 # Install dependencies
 RUN apt-get update; \
@@ -52,8 +52,6 @@ RUN apt-get update; \
         python3-pygments \
         qttools5-dev \
         qtxmlpatterns5-dev-tools
-
-        # qt5-default \
 
 # Clone and build Paraview
 WORKDIR /opt/
@@ -78,6 +76,7 @@ COPY scripts /usr/local/scripts
 
 COPY NAE/screenshot.png /etc/NAE/screenshot.png
 COPY NAE/AppDef.json /etc/NAE/AppDef.json
+RUN cp /opt/paraview/License*.txt /etc/NAE/.
 RUN curl --fail -X POST -d @/etc/NAE/AppDef.json https://cloud.nimbix.net/api/jarvice/validate
 
 RUN mkdir -p /etc/NAE && touch /etc/NAE/{screenshot.png,screenshot.txt,license.txt,AppDef.json}
