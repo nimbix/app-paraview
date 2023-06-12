@@ -51,7 +51,8 @@ RUN apt-get update; \
         python3-numpy \
         python3-pygments \
         qttools5-dev \
-        qtxmlpatterns5-dev-tools
+        qtxmlpatterns5-dev-tools \
+        mousepad
 
 # Clone and build Paraview
 WORKDIR /opt/
