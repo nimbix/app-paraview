@@ -31,7 +31,7 @@ LABEL maintainer="Nimbix, Inc." \
 
 # Update SERIAL_NUMBER to force rebuild of all layers (don't use cached layers)
 ARG SERIAL_NUMBER
-ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20230227.1000}
+ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20230928.1000}
 
 # Install dependencies
 RUN apt-get update; \
@@ -59,7 +59,7 @@ WORKDIR /opt/
 RUN git clone https://gitlab.kitware.com/paraview/paraview.git && \
     mkdir paraview_build && \
     cd paraview && \
-    git checkout v5.11.0 && \
+    git checkout v5.11.2 && \
     git submodule update --init --recursive && \
     cd ../paraview_build && \
     cmake -GNinja -DPARAVIEW_USE_PYTHON=ON -DPARAVIEW_USE_MPI=ON -DVTK_SMP_IMPLEMENTATION_TYPE=TBB -DCMAKE_BUILD_TYPE=Release ../paraview && \
