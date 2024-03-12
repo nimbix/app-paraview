@@ -1,5 +1,15 @@
+SERIAL_NUMBER=20240305.1000
+PARAVIEW_VERSION=5.12.0
+IMAGE=us-docker.pkg.dev/jarvice/images/app-paraview:$(PARAVIEW_VERSION)
 all:
-	DOCKER_BUILDKIT=1 docker build --pull --rm -f "Dockerfile" -t us-docker.pkg.dev/jarvice/images/app-paraview:5.11.2 "."
+	podman build \
+		--jobs 0 \
+		--pull \
+		--rm \
+		-f "Dockerfile" \
+		-t $(IMAGE) \
+		--build-arg SERIAL_NUMBER=$(SERIAL_NUMBER) \
+		--build-arg PARAVIEW_VERSION=$(PARAVIEW_VERSION) "."
 
 push: all
-	docker push us-docker.pkg.dev/jarvice/images/app-paraview:5.11.2
+	podman push $(IMAGE)

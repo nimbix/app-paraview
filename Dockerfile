@@ -1,4 +1,4 @@
-# Copyright (c) 2023, Nimbix, Inc.
+# Copyright (c) 2024, Nimbix, Inc.
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -31,7 +31,9 @@ LABEL maintainer="Nimbix, Inc." \
 
 # Update SERIAL_NUMBER to force rebuild of all layers (don't use cached layers)
 ARG SERIAL_NUMBER
-ENV SERIAL_NUMBER ${SERIAL_NUMBER:-20230928.1000}
+ENV SERIAL_NUMBER ${SERIAL_NUMBER}
+
+ARG PARAVIEW_VERSION
 
 # Install dependencies
 RUN apt-get update; \
@@ -39,6 +41,7 @@ RUN apt-get update; \
         build-essential \
         cmake \
         git \
+        htop \
         libgl1-mesa-dev \
         libopenmpi-dev \
         libqt5help5 \
@@ -46,24 +49,24 @@ RUN apt-get update; \
         libqt5x11extras5-dev \
         libtbb-dev \
         libxt-dev \
+        mousepad \
         ninja-build \
         python3-dev \
         python3-numpy \
         python3-pygments \
         qttools5-dev \
-        qtxmlpatterns5-dev-tools \
-        mousepad
+        qtxmlpatterns5-dev-tools
 
 # Clone and build Paraview
 WORKDIR /opt/
 RUN git clone https://gitlab.kitware.com/paraview/paraview.git && \
     mkdir paraview_build && \
     cd paraview && \
-    git checkout v5.11.2 && \
+    git checkout v${PARAVIEW_VERSION} && \
     git submodule update --init --recursive && \
     cd ../paraview_build && \
     cmake -GNinja -DPARAVIEW_USE_PYTHON=ON -DPARAVIEW_USE_MPI=ON -DVTK_SMP_IMPLEMENTATION_TYPE=TBB -DCMAKE_BUILD_TYPE=Release ../paraview && \
-    ninja -j 24 && \
+    ninja -j 16 && \
     cd /opt/ && find . -name "*.o" | xargs rm
 
 # Install image-common tools and desktop
@@ -77,7 +80,8 @@ COPY scripts /usr/local/scripts
 
 COPY NAE/screenshot.png /etc/NAE/screenshot.png
 COPY NAE/AppDef.json /etc/NAE/AppDef.json
-RUN cp /opt/paraview/License*.txt /etc/NAE/.
+# RUN cp /opt/paraview/License*.txt /etc/NAE/.
+RUN sed -i s",PARAVIEW_VERSION,${PARAVIEW_VERSION}," /etc/NAE/AppDef.json
 RUN curl --fail -X POST -d @/etc/NAE/AppDef.json https://cloud.nimbix.net/api/jarvice/validate
 
-RUN mkdir -p /etc/NAE && touch /etc/NAE/{screenshot.png,screenshot.txt,license.txt,AppDef.json}
+RUN mkdir -p /etc/NAE && touch /etc/NAE/screenshot.png /etc/NAE/screenshot.txt /etc/NAE/license.txt /etc/NAE/AppDef.json
