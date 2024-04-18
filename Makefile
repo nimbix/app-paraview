@@ -1,6 +1,7 @@
 SERIAL_NUMBER=20240305.1000
 PARAVIEW_VERSION=5.12.0
-IMAGE=us-docker.pkg.dev/jarvice/images/app-paraview:$(PARAVIEW_VERSION)
+CUR_DATE=$(shell date +%Y-%m-%d)
+IMAGE=us-docker.pkg.dev/jarvice/images/app-paraview:$(PARAVIEW_VERSION)-$(CUR_DATE)
 all:
 	podman build \
 		--jobs 0 \
