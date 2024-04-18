@@ -17,11 +17,20 @@
   "commands": {
     "gui": {
       "path": "/usr/local/scripts/start.sh",
+      "scale_max": 1,
       "interactive": true,
       "verboseinit": false,
       "desktop": true,
       "name": "ParaView",
       "description": "Run the Paraview UI"
+    },
+    "gui-mpi": {
+      "path": "/usr/local/scripts/start-mpi.sh",
+      "interactive": true,
+      "verboseinit": false,
+      "desktop": true,
+      "name": "ParaView with MPI",
+      "description": "Run the Paraview UI with MPI"
     }
   },
   "image": {
