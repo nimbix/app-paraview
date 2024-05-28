@@ -25,7 +25,7 @@
 # The views and conclusions contained in the software and documentation are
 # those of the authors and should not be interpreted as representing official
 # policies, either expressed or implied, of Nimbix, Inc.
-FROM ubuntu:jammy
+FROM ubuntu:22.04
 LABEL maintainer="Nimbix, Inc." \
       license="BSD"
 
