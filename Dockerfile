@@ -25,9 +25,8 @@
 # The views and conclusions contained in the software and documentation are
 # those of the authors and should not be interpreted as representing official
 # policies, either expressed or implied, of Nimbix, Inc.
-FROM ubuntu:22.04
-LABEL maintainer="Nimbix, Inc." \
-      license="BSD"
+
+FROM rockylinux/rockylinux:9
 
 # Update SERIAL_NUMBER to force rebuild of all layers (don't use cached layers)
 ARG SERIAL_NUMBER
@@ -35,27 +34,25 @@ ENV SERIAL_NUMBER ${SERIAL_NUMBER}
 
 ARG PARAVIEW_VERSION
 
-# Install dependencies
-RUN apt-get update; \
-    DEBIAN_FRONTEND=noninteractive apt-get install -y \
-        build-essential \
-        cmake \
-        git \
-        htop \
-        libgl1-mesa-dev \
-        libopenmpi-dev \
-        libqt5help5 \
-        libqt5svg5-dev \
-        libqt5x11extras5-dev \
-        libtbb-dev \
-        libxt-dev \
-        mousepad \
-        ninja-build \
-        python3-dev \
-        python3-numpy \
-        python3-pygments \
-        qttools5-dev \
-        qtxmlpatterns5-dev-tools
+COPY --from=us-docker.pkg.dev/jarvice/images/mpi-builder:4.1.6 /opt/JARVICE /opt/JARVICE
+
+RUN dnf install epel-release -y && \
+    crb enable && \
+    dnf update -y && \
+    dnf group install -y "Development Tools" && \
+    dnf install -y \
+        cmake\
+        git\
+        ninja-build\
+        python3-devel\
+        qt5-qtbase-devel\
+        qt5-qtsvg-devel\
+        qt5-qttools-devel\
+        qt5-qtwebengine-devel\
+        qt5-qtxmlpatterns-devel\
+        tbb-devel\
+        wget &&\
+    dnf clean all
 
 # Clone and build Paraview
 WORKDIR /opt/
@@ -65,22 +62,22 @@ RUN git clone https://gitlab.kitware.com/paraview/paraview.git && \
     git checkout v${PARAVIEW_VERSION} && \
     git submodule update --init --recursive && \
     cd ../paraview_build && \
+    . /opt/JARVICE/jarvice_mpi.sh && \
     cmake -GNinja -DPARAVIEW_USE_PYTHON=ON -DPARAVIEW_USE_MPI=ON -DVTK_SMP_IMPLEMENTATION_TYPE=TBB -DCMAKE_BUILD_TYPE=Release ../paraview && \
     ninja -j 16 && \
     cd /opt/ && find . -name "*.o" | xargs rm
 
-# Install image-common tools and desktop
-RUN apt-get -y update && \
-    DEBIAN_FRONTEND=noninteractive apt-get -y install ca-certificates curl --no-install-recommends && \
+# Install jarvice-desktop tools and desktop
+ARG BRANCH=nimbix-menu-and-panel-fix
+RUN dnf install -y ca-certificates wget && \
     curl -H 'Cache-Control: no-cache' \
         https://raw.githubusercontent.com/nimbix/jarvice-desktop/master/install-nimbix.sh \
-        | bash
+        | bash -s -- --jarvice-desktop-branch ${BRANCH}
 
 COPY scripts /usr/local/scripts
 
 COPY NAE/screenshot.png /etc/NAE/screenshot.png
 COPY NAE/AppDef.json /etc/NAE/AppDef.json
-# RUN cp /opt/paraview/License*.txt /etc/NAE/.
 RUN sed -i s",PARAVIEW_VERSION,${PARAVIEW_VERSION}," /etc/NAE/AppDef.json
 RUN curl --fail -X POST -d @/etc/NAE/AppDef.json https://cloud.nimbix.net/api/jarvice/validate
 
