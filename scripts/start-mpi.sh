@@ -7,8 +7,18 @@ cd /data || true
 # Get number of nodes and cores
 CORES=$(wc -l /etc/JARVICE/cores | awk '{print $1}')
 
+# Setup MPI
+JARVICE_FOLDER=/opt/JARVICE
+export PATH=$JARVICE_FOLDER/openmpi/bin/:$JARVICE_FOLDER/bin/:$PATH
+export LD_LIBRARY_PATH=$JARVICE_FOLDER/openmpi/lib/:$JARVICE_FOLDER/lib/:$LD_LIBRARY_PATH
+export CPATH=$JARVICE_FOLDER/openmpi/include/:$JARVICE_FOLDER/include/:$CPATH
+export MPI_HOME=$JARVICE_FOLDER/openmpi/
+export MPI_RUN=$JARVICE_FOLDER/openmpi/bin/mpirun
+
 # Start the server
-eval mpirun -np $CORES --hostfile /etc/JARVICE/nodes /opt/paraview_build/bin/pvserver 1> /tmp/server-mpi.log 2> /tmp/server-mpi-err.log &
+cmd="$(which $MPI_RUN) -np $CORES --hostfile /etc/JARVICE/nodes /opt/paraview_build/bin/pvserver"
+echo "INFO: Starting MPI Server -> $cmd"
+eval "$cmd" 1> /tmp/server-mpi.log 2> /tmp/server-mpi-err.log &
 
 # Wait for the start up to happen
 PSERVER_URL=""
@@ -24,8 +34,13 @@ if [[ -z $PSERVER_URL ]]; then
     exit 1
 fi
 
+echo "INFO: MPI server starting completed"
+
 # Start paraview and connect to the mpi cluster
+cmd="/opt/paraview_build/bin/paraview --url \"$PSERVER_URL\""
+echo "INFO: Running $cmd"
 set +e
-eval /opt/paraview_build/bin/paraview --url $PSERVER_URL
+eval "$cmd"
 ERR=$?
+set -e
 exit $ERR
