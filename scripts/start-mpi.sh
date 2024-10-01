@@ -36,6 +36,11 @@ fi
 
 echo "INFO: MPI server starting completed"
 
+# Temporary check for the PS1 variable for terminal
+if [[ -z "${PS1}" ]]; then
+  echo "export PS1=\"[\u@\h: \w]\$ \"" >> $HOME/.bashrc
+fi
+
 # Start paraview and connect to the mpi cluster
 cmd="/opt/paraview_build/bin/paraview --url \"$PSERVER_URL\""
 echo "INFO: Running $cmd"
