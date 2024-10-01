@@ -69,9 +69,10 @@ RUN git clone https://gitlab.kitware.com/paraview/paraview.git && \
 
 # Install jarvice-desktop tools and desktop
 ARG BRANCH=nimbix-menu-and-panel-fix
+# ARG BRANCH=master
 RUN dnf install -y ca-certificates wget && \
     curl -H 'Cache-Control: no-cache' \
-        https://raw.githubusercontent.com/nimbix/jarvice-desktop/master/install-nimbix.sh \
+        https://raw.githubusercontent.com/nimbix/jarvice-desktop/${BRANCH}/install-nimbix.sh \
         | bash -s -- --jarvice-desktop-branch ${BRANCH}
 
 COPY scripts /usr/local/scripts
