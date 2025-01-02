@@ -1,6 +1,6 @@
 # app-paraview: Paraview Data Analysis and Visualization
 
-Ubuntu-based desktop with the [Paraview](https://www.paraview.org/)
+Rocky Linux based desktop with the [Paraview](https://www.paraview.org/)
 data analysis and visualization application.
 
 [ParaView](https://www.paraview.org/) is an open-source,
