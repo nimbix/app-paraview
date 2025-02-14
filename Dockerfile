@@ -63,13 +63,12 @@ RUN git clone https://gitlab.kitware.com/paraview/paraview.git && \
     git submodule update --init --recursive && \
     cd ../paraview_build && \
     . /opt/JARVICE/jarvice_mpi.sh && \
-    cmake -GNinja -DPARAVIEW_USE_PYTHON=ON -DPARAVIEW_USE_MPI=ON -DVTK_SMP_IMPLEMENTATION_TYPE=TBB -DCMAKE_BUILD_TYPE=Release ../paraview && \
+    CFLAGS="-s" CXXFLAGS="-s" cmake -GNinja -DPARAVIEW_USE_PYTHON=ON -DPARAVIEW_USE_MPI=ON -DVTK_SMP_IMPLEMENTATION_TYPE=TBB -DCMAKE_BUILD_TYPE=Release ../paraview && \
     ninja -j 16 && \
     cd /opt/ && find . -name "*.o" | xargs rm
 
 # Install jarvice-desktop tools and desktop
-ARG BRANCH=nimbix-menu-and-panel-fix
-# ARG BRANCH=master
+ARG BRANCH=master
 RUN dnf install -y ca-certificates wget && \
     curl -H 'Cache-Control: no-cache' \
         https://raw.githubusercontent.com/nimbix/jarvice-desktop/${BRANCH}/install-nimbix.sh \
@@ -83,4 +82,4 @@ COPY NAE/AppDef.json /etc/NAE/AppDef.json
 RUN sed -i s",PARAVIEW_VERSION,${PARAVIEW_VERSION}," /etc/NAE/AppDef.json
 RUN curl --fail -X POST -d @/etc/NAE/AppDef.json https://cloud.nimbix.net/api/jarvice/validate
 
-RUN mkdir -p /etc/NAE && touch /etc/NAE/screenshot.png /etc/NAE/screenshot.txt /etc/NAE/license.txt /etc/NAE/AppDef.json
+RUN mkdir -p /etc/NAE && touch /etc/NAE/screenshot.png /etc/NAE/screenshot.txt /etc/NAE/license.txt /etc/NAE/AppDef.json /etc/NAE/swlicense.txt

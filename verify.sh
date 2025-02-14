@@ -9,7 +9,7 @@ if [[ -z $IMAGE ]]; then
     exit 1
 fi
 
-podman run -it --rm --shm-size=16g -p 5902:5902 --entrypoint=bash "$IMAGE" -ec "
+podman run -it --rm --shm-size=16g -p 5902:5902 -v $PWD/.data:/mydata:Z --entrypoint=bash "$IMAGE" -ec "
     useradd --shell /bin/bash nimbix
     mkdir -p /home/nimbix/
     mkdir -p /data
@@ -37,6 +37,7 @@ podman run -it --rm --shm-size=16g -p 5902:5902 --entrypoint=bash "$IMAGE" -ec "
     echo JOB_NAME=Local_Testing >> /etc/JARVICE/jobinfo.sh
     su nimbix -c '
         cd \$HOME
+        # /usr/local/bin/nimbix_desktop
         /usr/local/bin/nimbix_desktop /usr/local/scripts/$ENTRY_POINT
     '
 "

@@ -7,6 +7,7 @@ all:
 		--jobs 0 \
 		--pull \
 		--rm \
+		--format docker \
 		-f "Dockerfile" \
 		-t $(IMAGE) \
 		--build-arg SERIAL_NUMBER=$(SERIAL_NUMBER) \
