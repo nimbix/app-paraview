@@ -41,8 +41,22 @@ if [[ -z "${PS1}" ]]; then
   echo "export PS1=\"[\u@\h: \w]\$ \"" >> $HOME/.bashrc
 fi
 
+# Loop through optional inputs
+SCRIPT=""
+while [ -n "$1" ]; do
+  case "$1" in
+  -script)
+    shift
+    echo "INFO: Python Script File: $1"
+    SCRIPT="--script=$1"
+    ;;
+  *) ;;
+  esac
+  shift
+done
+
 # Start paraview and connect to the mpi cluster
-cmd="/opt/paraview_build/bin/paraview --url \"$PSERVER_URL\""
+cmd="/opt/paraview_build/bin/paraview $SCRIPT --url=$PSERVER_URL"
 echo "INFO: Running $cmd"
 set +e
 eval "$cmd"

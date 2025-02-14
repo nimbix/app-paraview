@@ -22,7 +22,17 @@
       "verboseinit": false,
       "desktop": true,
       "name": "ParaView",
-      "description": "Run the Paraview UI"
+      "description": "Run the Paraview UI",
+      "parameters": {
+        "-script": {
+          "name": "Python Script",
+          "positional": false,
+          "required": false,
+          "type": "FILE",
+          "filter": "*.py",
+          "description": "Python script to be automatically loaded by paraview at start."
+        }
+      }
     },
     "gui-mpi": {
       "path": "/usr/local/scripts/start-mpi.sh",
@@ -30,7 +40,17 @@
       "verboseinit": false,
       "desktop": true,
       "name": "ParaView with MPI",
-      "description": "Run the Paraview UI with MPI"
+      "description": "Run the Paraview UI with MPI",
+      "parameters": {
+        "-script": {
+          "name": "Python Script",
+          "positional": false,
+          "required": false,
+          "type": "FILE",
+          "filter": "*.py",
+          "description": "Python script to be automatically loaded by paraview at start."
+        }
+      }
     }
   },
   "image": {
