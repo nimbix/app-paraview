@@ -8,12 +8,8 @@ cd /data || true
 CORES=$(wc -l /etc/JARVICE/cores | awk '{print $1}')
 
 # Setup MPI
-JARVICE_FOLDER=/opt/JARVICE
-export PATH=$JARVICE_FOLDER/openmpi/bin/:$JARVICE_FOLDER/bin/:$PATH
-export LD_LIBRARY_PATH=$JARVICE_FOLDER/openmpi/lib/:$JARVICE_FOLDER/lib/:$LD_LIBRARY_PATH
-export CPATH=$JARVICE_FOLDER/openmpi/include/:$JARVICE_FOLDER/include/:$CPATH
-export MPI_HOME=$JARVICE_FOLDER/openmpi/
-export MPI_RUN=$JARVICE_FOLDER/openmpi/bin/mpirun
+JARVICE_FOLDER=/opt/JARVICE-MPI
+. $JARVICE_FOLDER/jarvice_mpi.sh
 
 # Start the server
 cmd="$(which $MPI_RUN) -np $CORES --hostfile /etc/JARVICE/nodes /opt/paraview_build/bin/pvserver"
