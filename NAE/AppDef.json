@@ -5,8 +5,7 @@
   "licensed": true,
   "appdefversion": 2,
   "classifications": [
-    "Simulation/Visualization",
-    "Simulation/Postprocessing"
+      "HPC/Data Science & Analytics"
   ],
   "machines": [
     "n*"
