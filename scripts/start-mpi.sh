@@ -51,6 +51,10 @@ while [ -n "$1" ]; do
   shift
 done
 
+mkdir -p "$HOME/.xdg_runtime"
+export XDG_RUNTIME_DIR="$HOME/.xdg_runtime"
+export RUNLEVEL=3
+
 # Start paraview and connect to the mpi cluster
 cmd="/opt/paraview_build/bin/paraview $SCRIPT --url=$PSERVER_URL"
 echo "INFO: Running $cmd"

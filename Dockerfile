@@ -26,15 +26,13 @@
 # those of the authors and should not be interpreted as representing official
 # policies, either expressed or implied, of Nimbix, Inc.
 
-FROM rockylinux/rockylinux:9
+FROM us-docker.pkg.dev/jarvice/images/mpi-builder:5.0.8-el9-gcc14
 
 # Update SERIAL_NUMBER to force rebuild of all layers (don't use cached layers)
-ARG SERIAL_NUMBER
-ENV SERIAL_NUMBER ${SERIAL_NUMBER}
+ARG SERIAL_NUMBER=1
+ENV SERIAL_NUMBER=${SERIAL_NUMBER}
 
-ARG PARAVIEW_VERSION
-
-COPY --from=us-docker.pkg.dev/jarvice/images/mpi-builder:5.0.7-el9-gcc14 /opt /opt
+ARG PARAVIEW_VERSION=1
 
 RUN dnf install epel-release -y && \
     crb enable && \
@@ -54,6 +52,13 @@ RUN dnf install epel-release -y && \
         wget &&\
     dnf clean all
 
+# Install jarvice-desktop tools and desktop
+ARG BRANCH=master
+RUN dnf install -y ca-certificates wget && \
+    curl -H 'Cache-Control: no-cache' \
+        https://raw.githubusercontent.com/nimbix/jarvice-desktop/${BRANCH}/install-nimbix.sh \
+        | bash -s -- --jarvice-desktop-branch ${BRANCH}
+
 # Clone and build Paraview
 WORKDIR /opt/
 RUN git clone https://gitlab.kitware.com/paraview/paraview.git && \
@@ -67,12 +72,9 @@ RUN git clone https://gitlab.kitware.com/paraview/paraview.git && \
     ninja -j 16 && \
     cd /opt/ && find . -name "*.o" | xargs rm
 
-# Install jarvice-desktop tools and desktop
-ARG BRANCH=master
-RUN dnf install -y ca-certificates wget && \
-    curl -H 'Cache-Control: no-cache' \
-        https://raw.githubusercontent.com/nimbix/jarvice-desktop/${BRANCH}/install-nimbix.sh \
-        | bash -s -- --jarvice-desktop-branch ${BRANCH}
+# Add test data for examples
+COPY buildscripts/install-examples.sh /tmp/buildscripts/install-examples.sh
+RUN /tmp/buildscripts/install-examples.sh
 
 COPY scripts /usr/local/scripts
 

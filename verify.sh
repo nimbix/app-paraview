@@ -3,13 +3,13 @@
 ENTRY_POINT=${1:-start.sh}
 
 # Get latest image
-IMAGE=$(podman images | grep paraview | head -n1 | awk '{print $1 ":" $2}')
+IMAGE=$(docker images | grep paraview | head -n1 | awk '{print $1 ":" $2}')
 if [[ -z $IMAGE ]]; then
     echo "ERROR: Paraview image not found..."
     exit 1
 fi
 
-podman run -it --rm --shm-size=16g -p 5902:5902 -v $PWD/.data:/mydata:Z --entrypoint=bash "$IMAGE" -ec "
+docker run -it --rm --shm-size=16g -p 5902:5902 -v $PWD/.data:/mydata:Z --entrypoint=bash "$IMAGE" -ec "
     useradd --shell /bin/bash nimbix
     mkdir -p /home/nimbix/
     mkdir -p /data
@@ -18,14 +18,6 @@ podman run -it --rm --shm-size=16g -p 5902:5902 -v $PWD/.data:/mydata:Z --entryp
     chown -R nimbix:nimbix /data
     chown -R nimbix:nimbix /etc/JARVICE
     echo 127.0.0.1 > /etc/JARVICE/cores
-    echo 127.0.0.1 >> /etc/JARVICE/cores
-    echo 127.0.0.1 >> /etc/JARVICE/cores
-    echo 127.0.0.1 >> /etc/JARVICE/cores
-    echo 127.0.0.1 >> /etc/JARVICE/cores
-    echo 127.0.0.1 >> /etc/JARVICE/cores
-    echo 127.0.0.1 >> /etc/JARVICE/cores
-    echo 127.0.0.1 >> /etc/JARVICE/cores
-    echo 127.0.0.1 >> /etc/JARVICE/cores
     echo 127.0.0.1 >> /etc/JARVICE/cores
     echo 127.0.0.1 >> /etc/JARVICE/cores
     echo 127.0.0.1 >> /etc/JARVICE/cores
