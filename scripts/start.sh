@@ -24,6 +24,7 @@ while [ -n "$1" ]; do
 done
 
 mkdir -p "$HOME/.xdg_runtime"
+chmod -R 0700 "$HOME/.xdg_runtime"
 export XDG_RUNTIME_DIR="$HOME/.xdg_runtime"
 export RUNLEVEL=3
 
