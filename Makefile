@@ -1,5 +1,5 @@
 SERIAL_NUMBER=$(DATE).1000
-PARAVIEW_VERSION=6.0.0
+PARAVIEW_VERSION=6.0.1
 CUR_DATE=$(shell date +%Y-%m-%d)
 IMAGE=us-docker.pkg.dev/jarvice/images/app-paraview:$(PARAVIEW_VERSION)-$(CUR_DATE)
 all:
