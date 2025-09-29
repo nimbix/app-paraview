@@ -53,7 +53,7 @@ RUN dnf install epel-release -y && \
     dnf clean all
 
 # Install jarvice-desktop tools and desktop
-ARG BRANCH=master
+ARG BRANCH=rhel-10
 RUN dnf install -y ca-certificates wget && \
     curl -H 'Cache-Control: no-cache' \
         https://raw.githubusercontent.com/nimbix/jarvice-desktop/${BRANCH}/install-nimbix.sh \
