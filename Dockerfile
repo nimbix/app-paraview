@@ -1,4 +1,4 @@
-# Copyright (c) 2025, Nimbix, Inc.
+# Copyright (c) 2026, Nimbix, Inc.
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -26,7 +26,7 @@
 # those of the authors and should not be interpreted as representing official
 # policies, either expressed or implied, of Nimbix, Inc.
 
-FROM us-docker.pkg.dev/jarvice/images/mpi-builder:5.0.8-el9-gcc14
+FROM us-docker.pkg.dev/jarvice/images/mpi-builder:5.0.10-el9-gcc15
 
 # Update SERIAL_NUMBER to force rebuild of all layers (don't use cached layers)
 ARG SERIAL_NUMBER=1
