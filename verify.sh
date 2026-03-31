@@ -3,7 +3,7 @@
 ENTRY_POINT=${1:-start.sh}
 
 # Get latest image
-IMAGE=$(docker images | grep paraview | head -n1 | awk '{print $1 ":" $2}')
+IMAGE=$(docker images --format table | grep paraview | head -n1 | awk '{print $1 ":" $2}')
 if [[ -z $IMAGE ]]; then
     echo "ERROR: Paraview image not found..."
     exit 1
