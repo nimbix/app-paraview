@@ -23,7 +23,7 @@ CFLAGS="-s" CXXFLAGS="-s" cmake \
     -DCMAKE_BUILD_TYPE=Release \
     ../paraview
 
-ninja -j 16
+ninja -j 8
 
 cd /opt/
 find . -name "*.o" | xargs rm

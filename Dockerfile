@@ -26,7 +26,7 @@
 # those of the authors and should not be interpreted as representing official
 # policies, either expressed or implied, of Nimbix, Inc.
 
-FROM us-docker.pkg.dev/jarvice/images/mpi-builder:5.0.10-el9-gcc15
+FROM us-docker.pkg.dev/jarvice/images/mpi-builder:5.0.11-el9-gcc15
 
 # Update SERIAL_NUMBER to force rebuild of all layers (don't use cached layers)
 ARG SERIAL_NUMBER=1
@@ -53,7 +53,7 @@ RUN dnf install epel-release -y && \
     dnf clean all
 
 # Install jarvice-desktop tools and desktop
-ARG BRANCH=rhel-10
+ARG BRANCH=master
 RUN dnf install -y ca-certificates wget && \
     curl -H 'Cache-Control: no-cache' \
         https://raw.githubusercontent.com/nimbix/jarvice-desktop/${BRANCH}/install-nimbix.sh \
